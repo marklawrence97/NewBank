@@ -12,7 +12,6 @@ public class NewBankClientHandler extends Thread{
 	private BufferedReader in;
 	private PrintWriter out;
 	
-	
 	public NewBankClientHandler(Socket s) throws IOException {
 		bank = newbank.server.NewBank.getBank();
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -22,22 +21,16 @@ public class NewBankClientHandler extends Thread{
 	public void run() {
 		// keep getting requests from the client and processing them
 		try {
-			newbank.server.CustomerID customer = null;
-			int times = 0;
-			while (customer == null){
-				if (times>0){
-					out.println("Log In Failed. Please re-enter your details");
-				}
-				// ask for user name
-				out.println("Enter Username");
-				String userName = in.readLine();
-				// ask for password
-				out.println("Enter Password");
-				String password = in.readLine();
+			newbank.server.CustomerID customer;
+			while (true){
+				String userName = getUserInput("Enter Username");
+				String password = getUserInput("Enter Password");
 				out.println("Checking Details...");
-				// authenticate user and get customer ID token from bank for use in subsequent requests
 				customer = bank.checkLogInDetails(userName, password);
-				times++;
+				if (customer != null){
+					break;
+				}
+				out.println("Log In Failed. Please re-enter your details");
 			}
 			// if the user is authenticated then get requests from the user and process them
 			out.println("Log In Successful. What do you want to do?");
@@ -59,6 +52,11 @@ public class NewBankClientHandler extends Thread{
 				Thread.currentThread().interrupt();
 			}
 		}
+	}
+
+	public String getUserInput(String message) throws IOException{
+		this.out.println(message);
+		return this.in.readLine();
 	}
 
 }
