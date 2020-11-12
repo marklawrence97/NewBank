@@ -18,7 +18,7 @@ public class NewBankServer extends Thread{
 		try {
 			while(true) {
 				Socket s = server.accept();
-				NewBankClientHandler clientHandler = new NewBankClientHandler(s);
+				newbank.server.NewBankClientHandler clientHandler = new newbank.server.NewBankClientHandler(s);
 				clientHandler.start();
 			}
 		} catch (IOException e) {

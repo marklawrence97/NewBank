@@ -1,13 +1,17 @@
 package newbank.server;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Customer {
 	
 	private ArrayList<Account> accounts;
+	private String password;
 	
 	public Customer() {
 		accounts = new ArrayList<>();
+		Random rand = new Random();
+		password = String.valueOf(rand.nextInt(10));
 	}
 	
 	public String accountsToString() {
@@ -16,6 +20,14 @@ public class Customer {
 			s += a.toString();
 		}
 		return s;
+	}
+
+	public void setPassword(String password){
+		this.password = password;
+	}
+
+	public String getPassword(){
+		return this.password;
 	}
 
 	public void addAccount(Account account) {
