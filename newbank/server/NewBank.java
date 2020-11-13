@@ -15,23 +15,27 @@ public class NewBank {
 	private void addTestData() {
 		Customer bhagy = new Customer();
 		bhagy.addAccount(new Account("Main", 1000.0));
+		bhagy.setPassword("bhagy123");
 		customers.put("Bhagy", bhagy);
 		
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Savings", 1500.0));
+		christina.setPassword("christina123");
 		customers.put("Christina", christina);
 		
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
+		john.setPassword("john123");
 		customers.put("John", john);
 	}
 	
 	public static NewBank getBank() {
 		return bank;
 	}
-	
+
+	// checks that the userName is in customers, and that the password given corresponds to that customer
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
-		if(customers.containsKey(userName)) {
+		if(customers.containsKey(userName) && customers.get(userName).getPassword().equals(password)) {
 			return new CustomerID(userName);
 		}
 		return null;
