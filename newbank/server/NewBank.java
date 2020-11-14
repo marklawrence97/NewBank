@@ -1,9 +1,11 @@
 package newbank.server;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class NewBank {
-	
+
+	Scanner reader = new Scanner(System.in);
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
 	
@@ -46,6 +48,7 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			case "ADDNEWACCOUNT" :  return addNewAccount(customer);
 			default : return "FAIL";
 			}
 		}
@@ -56,4 +59,10 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
+	private String addNewAccount(CustomerID customer){
+		System.out.println("Enter new account name:");
+		String accountName = reader.nextLine();
+		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
+		return "Account has been created";
+	}
 }
