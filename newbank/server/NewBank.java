@@ -1,11 +1,9 @@
 package newbank.server;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class NewBank {
 
-	Scanner read = new Scanner(System.in);
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
 	
@@ -48,7 +46,10 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			case "ADDNEWACCOUNT" : return addNewAccount(customer);
+			case "NEWACCOUNT Savings" : return addSaving(customer);
+			case "NEWACCOUNT Main" : return addMain(customer);
+			case "NEWACCOUNT Checking" : return addChecking(customer);
+
 			default : return "FAIL";
 			}
 		}
@@ -59,12 +60,17 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	private String addNewAccount(CustomerID customer){
-		System.out.println("Input new account name:");
-		String accountName = read.nextLine();
-		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
-		return "New account has been added";
-
+	private String addMain(CustomerID customer){
+		customers.get(customer.getKey()).addAccount(new Account("Main", 0.0));
+		return "SUCCESS";
+	}
+	private String addSaving(CustomerID customer){
+		customers.get(customer.getKey()).addAccount(new Account("Savings", 0.0));
+		return "SUCCESS";
+	}
+	private String addChecking(CustomerID customer){
+		customers.get(customer.getKey()).addAccount(new Account("Checking",0.0));
+		return "SUCCESS";
 	}
 
 }
