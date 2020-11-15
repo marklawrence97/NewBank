@@ -17,9 +17,9 @@ public class Customer {
 	public String accountsToString() {
 		String s = "";
 		for(Account a : accounts) {
-			s += a.toString();
+			s += a.toString() + "\n";
 		}
-		return s;
+		return s.trim();
 	}
 
 	public void setPassword(String password){
