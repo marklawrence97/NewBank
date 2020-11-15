@@ -20,6 +20,8 @@ public class NewBank {
 		
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Savings", 1500.0));
+		christina.addAccount(new Account("Checking", 350.0));
+		christina.addAccount(new Account("Main", 2000.0));
 		christina.setPassword("christina123");
 		customers.put("Christina", christina);
 		
