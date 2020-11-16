@@ -55,22 +55,36 @@ public class NewBank {
 		}
 		return "FAIL";
 	}
-	
+
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	private String addMain(CustomerID customer){
-		customers.get(customer.getKey()).addAccount(new Account("Main", 0.0));
-		return "SUCCESS";
+	private String addMain(CustomerID customer) {
+		if (showMyAccounts(customer).contains("Main")) {
+			return "FAIL";
+		} else {
+			customers.get(customer.getKey()).addAccount(new Account("Main", 0.0));
+			return "SUCCESS";
+		}
 	}
-	private String addSaving(CustomerID customer){
-		customers.get(customer.getKey()).addAccount(new Account("Savings", 0.0));
-		return "SUCCESS";
+
+	private String addSaving(CustomerID customer) {
+		if (showMyAccounts(customer).contains("Savings")) {
+			return "FAIL";
+		} else {
+			customers.get(customer.getKey()).addAccount(new Account("Savings", 0.0));
+			return "SUCCESS";
+		}
 	}
-	private String addChecking(CustomerID customer){
-		customers.get(customer.getKey()).addAccount(new Account("Checking",0.0));
-		return "SUCCESS";
+
+	private String addChecking(CustomerID customer) {
+		if (showMyAccounts(customer).contains("Checking")) {
+			return "FAIL";
+		} else {
+			customers.get(customer.getKey()).addAccount(new Account("Checking", 0.0));
+			return "SUCCESS";
+		}
 	}
 
 }
