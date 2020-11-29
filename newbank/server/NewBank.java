@@ -46,9 +46,7 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			case "NEWACCOUNT Savings" : return addSaving(customer);
-			case "NEWACCOUNT Main" : return addMain(customer);
-			case "NEWACCOUNT Checking" : return addChecking(customer);
+			case "NEWACCOUNT <Name>" : return addAccount(customer);
 
 			default : return "FAIL";
 			}
@@ -60,29 +58,11 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	private String addMain(CustomerID customer) {
-		if (showMyAccounts(customer).contains("Main")) {
+	private String addAccount(CustomerID customer) {
+		if (showMyAccounts(customer).contains("<Name>")) {
 			return "FAIL";
 		} else {
-			customers.get(customer.getKey()).addAccount(new Account("Main", 0.0));
-			return "SUCCESS";
-		}
-	}
-
-	private String addSaving(CustomerID customer) {
-		if (showMyAccounts(customer).contains("Savings")) {
-			return "FAIL";
-		} else {
-			customers.get(customer.getKey()).addAccount(new Account("Savings", 0.0));
-			return "SUCCESS";
-		}
-	}
-
-	private String addChecking(CustomerID customer) {
-		if (showMyAccounts(customer).contains("Checking")) {
-			return "FAIL";
-		} else {
-			customers.get(customer.getKey()).addAccount(new Account("Checking", 0.0));
+			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
 			return "SUCCESS";
 		}
 	}
