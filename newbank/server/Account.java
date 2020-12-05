@@ -14,4 +14,17 @@ public class Account {
 		return (accountName + ": " + openingBalance);
 	}
 
+	public void addToAccount(double money){
+		this.openingBalance += money;
+	}
+
+	public boolean removeFromAccount(double money){
+		if (openingBalance >= money){
+			this.openingBalance -= money;
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }

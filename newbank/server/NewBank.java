@@ -19,9 +19,9 @@ public class NewBank {
 		customers.put("Bhagy", bhagy);
 		
 		Customer christina = new Customer();
+		christina.addAccount(new Account("Main", 2000.0));
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Checking", 350.0));
-		christina.addAccount(new Account("Main", 2000.0));
 		christina.setPassword("christina123");
 		customers.put("Christina", christina);
 		
@@ -46,9 +46,11 @@ public class NewBank {
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
 		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
-			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			default : return "FAIL";
+			if (request.equals("SHOWMYACCOUNTS")) {
+				return showMyAccounts(customer);
+			}
+			else if(request.contains("PAY")){
+				return payExternal(customer, request);
 			}
 		}
 		return "FAIL";
@@ -58,4 +60,23 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
+	private String payExternal(CustomerID customer, String request){
+		try{
+			String[] parts = request.split(" ");
+			String customerToDeposit = parts[1];
+			double amountToDeposit = Double.parseDouble(parts[2]);
+			// Checks that the customerToDeposit exists in the bank and that the customer has enough money to transfer
+			if(customers.containsKey(customerToDeposit) && customers.get(customer.getKey()).getMainAccount().removeFromAccount(amountToDeposit)){
+				customers.get(customerToDeposit).getMainAccount().addToAccount(amountToDeposit);
+				return ("SUCCESS");
+			}
+		}
+		catch (ArrayIndexOutOfBoundsException incorrectInput){
+			return("FAIL");
+		}
+		catch (RuntimeException e){
+			return ("FAIL");
+		}
+		return ("FAIL");
+	}
 }
