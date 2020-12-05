@@ -50,7 +50,7 @@ public class NewBank {
 				return showMyAccounts(customer);
 			}
 			else if(request.contains("PAY")){
-				return payExternal(customer, request);
+				return payThirdParty(customer, request);
 			}
 		}
 		return "FAIL";
@@ -60,7 +60,7 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	private String payExternal(CustomerID customer, String request){
+	private String payThirdParty(CustomerID customer, String request){
 		try{
 			String[] parts = request.split(" ");
 			String customerToDeposit = parts[1];
