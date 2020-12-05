@@ -3,7 +3,7 @@ package newbank.server;
 import java.util.HashMap;
 
 public class NewBank {
-	
+
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
 	
@@ -48,14 +48,25 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(request) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			case "NEWACCOUNT <Name>" : return addAccount(customer);
+
 			default : return "FAIL";
 			}
 		}
 		return "FAIL";
 	}
-	
+
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
+	}
+
+	private String addAccount(CustomerID customer) {
+		if (showMyAccounts(customer).contains("<Name>")) {
+			return "FAIL";
+		} else {
+			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
+			return "SUCCESS";
+		}
 	}
 
 }
