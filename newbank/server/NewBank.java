@@ -3,34 +3,34 @@ package newbank.server;
 import java.util.HashMap;
 
 public class NewBank {
-	
+
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	
+
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
 	}
-	
+
 	private void addTestData() {
 		Customer bhagy = new Customer();
 		bhagy.addAccount(new Account("Main", 1000.0));
 		bhagy.setPassword("bhagy123");
 		customers.put("Bhagy", bhagy);
-		
+
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Main", 2000.0));
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Checking", 350.0));
 		christina.setPassword("christina123");
 		customers.put("Christina", christina);
-		
+
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
 		john.setPassword("john123");
 		customers.put("John", john);
 	}
-	
+
 	public static NewBank getBank() {
 		return bank;
 	}
@@ -49,13 +49,16 @@ public class NewBank {
 			if (request.equals("SHOWMYACCOUNTS")) {
 				return showMyAccounts(customer);
 			}
-			else if(request.contains("PAY")){
+			else if (request.startsWith("NEWACCOUNT")){
+				return addAccount(customer, request);
+			}
+			else if(request.startsWith("PAY")) {
 				return payThirdParty(customer, request);
 			}
 		}
 		return "FAIL";
 	}
-	
+
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
@@ -71,12 +74,23 @@ public class NewBank {
 				return ("SUCCESS");
 			}
 		}
-		catch (ArrayIndexOutOfBoundsException incorrectInput){
+		catch (Exception e){
 			return("FAIL");
 		}
-		catch (RuntimeException e){
-			return ("FAIL");
-		}
 		return ("FAIL");
+	}
+
+	private String addAccount(CustomerID customer, String request) {
+		try{
+			if (showMyAccounts(customer).contains(request.split(" ")[1])) {
+				return "FAIL";
+			} else {
+				customers.get(customer.getKey()).addAccount(new Account((request.split(" ")[1]), 0.0));
+				return "SUCCESS";
+			}
+		}
+		catch (Exception e){
+			return("FAIL");
+		}
 	}
 }
