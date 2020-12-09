@@ -32,4 +32,12 @@ public class Customer {
 	public void addAccount(Account account) {
 		accounts.add(account);		
 	}
+
+	// Assumes the first account in the list is the main one
+	public Account getMainAccount(){
+		if (accounts.size()>0){
+			return accounts.get(0);
+		}
+		return null;
+	}
 }
