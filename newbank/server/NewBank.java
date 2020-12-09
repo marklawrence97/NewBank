@@ -50,7 +50,7 @@ public class NewBank {
 				return showMyAccounts(customer);
 			}
 			else if (request.startsWith("NEWACCOUNT")){
-				return addAccount(customer, request);
+				return addAccount(customer);
 			}
 			else if(request.startsWith("PAY")) {
 				return payThirdParty(customer, request);
@@ -80,17 +80,12 @@ public class NewBank {
 		return ("FAIL");
 	}
 
-	private String addAccount(CustomerID customer, String request) {
-		try{
-			if (showMyAccounts(customer).contains(request.split(" ")[1])) {
-				return "FAIL";
-			} else {
-				customers.get(customer.getKey()).addAccount(new Account((request.split(" ")[1]), 0.0));
-				return "SUCCESS";
-			}
-		}
-		catch (Exception e){
-			return("FAIL");
+	private String addAccount(CustomerID customer) {
+		if (showMyAccounts(customer).contains("<Name>")) {
+			return "FAIL";
+		} else {
+			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
+			return "SUCCESS";
 		}
 	}
 }
