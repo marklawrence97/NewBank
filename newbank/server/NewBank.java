@@ -1,14 +1,16 @@
 package newbank.server;
 
 import java.util.HashMap;
-
+import static java.lang.System.out;
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
+	private HashMap<String,Double> account;
 
 	private NewBank() {
 		customers = new HashMap<>();
+		account = new HashMap<>();
 		addTestData();
 	}
 
@@ -17,6 +19,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		bhagy.setPassword("bhagy123");
 		customers.put("Bhagy", bhagy);
+		account.put("Bhagy", 1000.0);
 
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Main", 2000.0));
@@ -46,14 +49,13 @@ public class NewBank {
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
 		if(customers.containsKey(customer.getKey())) {
-			if (request.equals("SHOWMYACCOUNTS")) {
-				return showMyAccounts(customer);
-			}
-			else if (request.startsWith("NEWACCOUNT")){
-				return addAccount(customer);
-			}
-			else if(request.startsWith("PAY")) {
-				return payThirdParty(customer, request);
+			switch(request) {
+				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+				case "WITHDRAW" : return withdrawMoney(customer);
+				case "DEPOSIT" : return depositMoney(customer);
+				case "TRANSFERMONEYTOPERSONAL" : return transferMoneyToPersonal(customer);
+				case "TRANSFERMONEYTOEXTERNALACCOUNT" : return transferMoneyToExternal(customer);
+			default : return "FAIL";
 			}
 		}
 		return "FAIL";
@@ -87,5 +89,21 @@ public class NewBank {
 			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
 			return "SUCCESS";
 		}
+	private String withdrawMoney(CustomerID customer) {
+		int balance = account.get(customer.getKey());
+		String currentBalance = String.valueOf(balance);
+		return "The new balance is:" + currentBalance;
+	}
+
+	private String depositMoney(CustomerID customer) {
+		return (customers.get(customer.getKey())).accountsToString();
+	}
+
+	private String transferMoneyToPersonal(CustomerID customer) {
+		return (customers.get(customer.getKey())).accountsToString();
+	}
+
+	private String transferMoneyToExternal(CustomerID customer) {
+		return (customers.get(customer.getKey())).accountsToString();
 	}
 }
