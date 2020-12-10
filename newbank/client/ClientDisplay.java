@@ -20,10 +20,10 @@ public class ClientDisplay {
         instructionsList.add(" Please SELECT the following:");
         instructionsList.add("|----------------------------|");
         instructionsList.add("1.SHOWMYACCOUNTS");
-        instructionsList.add("2.WITHDRAW");
-        instructionsList.add("3.DEPOSIT");
-        instructionsList.add("4.TRANSFERMONEYTOPERSONAL");
-        instructionsList.add("5.TRANSFERMONEYTOEXTERNALACCOUNT");
+        instructionsList.add("2.WITHDRAW <Amount>");
+        instructionsList.add("3.DEPOSIT <Amount>");
+        instructionsList.add("4.TRANSFER <Amount> <From> <To>");
+        instructionsList.add("5.PAY <Person/Company> <Amount>");
         return instructionsList;
     }
 
