@@ -19,7 +19,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		bhagy.setPassword("bhagy123");
 		customers.put("Bhagy", bhagy);
-		account.put("Bhagy", 1000);
+		account.put("Bhagy", 1000.0);
 
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Main", 2000.0));
@@ -73,15 +73,15 @@ public class NewBank {
 	}
 
 	private String withdrawMoney(CustomerID customer) {
-		int balance = account.get(customer.getKey());
+		Double balance = account.get(customer.getKey());
 		String currentBalance = String.valueOf(balance);
 		return "The new balance is:" + currentBalance;
 	}
 
 	private String depositMoney(CustomerID customer, String request) {
 		try{
-			double amountToDeposit = Double.parseDouble(request.split(" ")[2]);
-			customers.get(customerToDeposit).getMainAccount().addToAccount(amountToDeposit);
+			double amountToDeposit = Double.parseDouble(request.split(" ")[1]);
+			customers.get(customer.getKey()).getMainAccount().addToAccount(amountToDeposit);
 			return ("SUCCESS");
 		}
 		catch (Exception e){
@@ -93,7 +93,7 @@ public class NewBank {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
-	private String payThirdParty(CustomerID customer, request){
+	private String payThirdParty(CustomerID customer, String request){
 		try{
 			String[] parts = request.split(" ");
 			String customerToDeposit = parts[1];
