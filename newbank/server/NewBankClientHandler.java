@@ -1,17 +1,20 @@
 package newbank.server;
 
+import newbank.client.ClientDisplay;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.ClientInfoStatus;
 
 public class NewBankClientHandler extends Thread{
 	
 	private newbank.server.NewBank bank;
 	private BufferedReader in;
 	private PrintWriter out;
-	
+	private Boolean menuSelect;
+	private ClientDisplay clientDisplay;
 	public NewBankClientHandler(Socket s) throws IOException {
 		bank = newbank.server.NewBank.getBank();
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -33,7 +36,10 @@ public class NewBankClientHandler extends Thread{
 				out.println("Log In Failed. Please re-enter your details");
 			}
 			// if the user is authenticated then get requests from the user and process them
-			out.println("Log In Successful. What do you want to do?");
+			for (String ins : clientDisplay.clientServiceMenu()){
+				out.println(ins);
+			}
+				//out.println("Log In Successful. What do you want to do?");
 			while(true) {
 				String request = in.readLine();
 				System.out.println("Request from " + customer.getKey());
