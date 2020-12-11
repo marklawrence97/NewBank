@@ -6,7 +6,7 @@ public class NewBank {
 	
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-	private HashMap<String,Integer> account;
+	private HashMap<String,Double> account;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -19,7 +19,7 @@ public class NewBank {
 		bhagy.addAccount(new Account("Main", 1000.0));
 		bhagy.setPassword("bhagy123");
 		customers.put("Bhagy", bhagy);
-		account.put("Bhagy", 1000);
+		account.put("Bhagy", 1000.0);
 
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Savings", 1500.0));
@@ -66,7 +66,7 @@ public class NewBank {
 	}
 
 	private String withdrawMoney(CustomerID customer) {
-		int balance = account.get(customer.getKey());
+		double balance = account.get(customer.getKey());
 		String currentBalance = String.valueOf(balance);
 		return "The new balance is:" + currentBalance;
 	}
