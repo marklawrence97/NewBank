@@ -90,7 +90,7 @@ public class NewBank {
 			return "SUCCESS";
 		}
 	private String withdrawMoney(CustomerID customer) {
-		int balance = account.get(customer.getKey());
+		double balance = account.get(customer.getKey());
 		String currentBalance = String.valueOf(balance);
 		return "The new balance is:" + currentBalance;
 	}
