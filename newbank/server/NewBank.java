@@ -89,6 +89,8 @@ public class NewBank {
 			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
 			return "SUCCESS";
 		}
+	}
+
 	private String withdrawMoney(CustomerID customer) {
 		double balance = account.get(customer.getKey());
 		String currentBalance = String.valueOf(balance);
