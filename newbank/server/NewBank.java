@@ -5,8 +5,8 @@ import static java.lang.System.out;
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
-	private HashMap<String,Customer> customers;
-	private HashMap<String,Double> account;
+	public HashMap<String,Customer> customers;
+	public HashMap<String,Double> account;
 
 	private NewBank() {
 		customers = new HashMap<>();

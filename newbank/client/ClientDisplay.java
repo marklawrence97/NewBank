@@ -14,6 +14,12 @@ public class ClientDisplay {
         System.out.println("|-----------------------------------|");
     }
 
+    public static void clientCreatedAnnouncement(String password){
+        System.out.println("Congratulations, your account as been created !");
+        System.out.println("£10 has been credited on this account as a welcome gift.");
+        System.out.println("To connect later on, your password is: " + password);
+    }
+
     public static List<String> clientServiceMenu(){
         List<String> instructionsList = new ArrayList<>();
         instructionsList.add("|----------------------------|");
@@ -26,6 +32,5 @@ public class ClientDisplay {
         instructionsList.add("5.TRANSFERMONEYTOEXTERNALACCOUNT");
         return instructionsList;
     }
-
 
 }
