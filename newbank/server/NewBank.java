@@ -61,6 +61,12 @@ public class NewBank {
 		return "FAIL";
 	}
 
+	public void addNewUser(String userName){
+		Customer newUser = new Customer();
+		newUser.addAccount(new Account("Main", 1000.0));
+		customers.put(userName, newUser);
+	}
+
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
@@ -89,6 +95,8 @@ public class NewBank {
 			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
 			return "SUCCESS";
 		}
+	}
+
 	private String withdrawMoney(CustomerID customer) {
 		double balance = account.get(customer.getKey());
 		String currentBalance = String.valueOf(balance);
