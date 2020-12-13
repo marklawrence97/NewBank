@@ -5,8 +5,8 @@ import static java.lang.System.out;
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
-	private HashMap<String,Customer> customers;
-	private HashMap<String,Double> account;
+	public HashMap<String,Customer> customers;
+	public HashMap<String,Double> account;
 
 	private NewBank() {
 		customers = new HashMap<>();
@@ -48,8 +48,10 @@ public class NewBank {
 
 	// commands from the NewBank customer are processed in this method
 	public synchronized String processRequest(CustomerID customer, String request) {
+		String command = request.split(" ")[0];
+
 		if(customers.containsKey(customer.getKey())) {
-			switch(request) {
+			switch(command) {
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				case "WITHDRAW" : return withdrawMoney(customer);
 				case "DEPOSIT" : return depositMoney(customer);
