@@ -1,7 +1,7 @@
 package newbank.server;
 
+import newbank.server.utils.PasswordGenerator;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Customer {
 	
@@ -10,16 +10,15 @@ public class Customer {
 	
 	public Customer() {
 		accounts = new ArrayList<>();
-		Random rand = new Random();
-		password = String.valueOf(rand.nextInt(10));
+		password = PasswordGenerator.generate(8);
 	}
 	
 	public String accountsToString() {
 		String s = "";
 		for(Account a : accounts) {
-			s += a.toString();
+			s += a.toString() + "\n";
 		}
-		return s;
+		return s.trim();
 	}
 
 	public void setPassword(String password){
@@ -32,5 +31,13 @@ public class Customer {
 
 	public void addAccount(Account account) {
 		accounts.add(account);		
+	}
+
+	// Assumes the first account in the list is the main one
+	public Account getMainAccount(){
+		if (accounts.size()>0){
+			return accounts.get(0);
+		}
+		return null;
 	}
 }
