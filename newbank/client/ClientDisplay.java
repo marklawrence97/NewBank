@@ -23,9 +23,9 @@ public class ClientDisplay {
 
     public static List<String> clientServiceMenu(){
         List<String> instructionsList = new ArrayList<>();
-        instructionsList.add("|----------------------------|");
+        instructionsList.add("|----------------------------------------|");
         instructionsList.add(" Please SELECT a service by typing below:");
-        instructionsList.add("|----------------------------|");
+        instructionsList.add("|----------------------------------------|");
         instructionsList.add("1.SHOWMYACCOUNTS");
         instructionsList.add("2.NEWACCOUNT <Name>");
         instructionsList.add("3.WITHDRAW <Amount>");

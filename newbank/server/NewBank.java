@@ -52,9 +52,8 @@ public class NewBank {
 
 		if(customers.containsKey(customer.getKey())) {
 			switch(command) {
-				case "ADDACCOUNT" : return addAccount(customer,request);
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-				case "NEWACCOUNT" : return addAccount(customer);
+				case "NEWACCOUNT" : return addAccount(customer,request);
 				case "WITHDRAW" : return withdrawMoney(customer);
 				case "DEPOSIT" : return depositMoney(customer);
 				case "MOVE" : return transferMoneyToPersonal(customer);

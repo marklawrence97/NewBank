@@ -56,12 +56,13 @@ public class NewBankClientHandler extends Thread{
 					out.println("Wrong Command, please try again.");
 				}
 			}
-			// if the user is authenticated then get requests from the user and process them
-			for (String ins : clientDisplay.clientServiceMenu()){
-				out.println(ins);
-			}
+
 				//out.println("Log In Successful. What do you want to do?");
 			while(true) {
+				// if the user is authenticated then get requests from the user and process them
+				for (String ins : clientDisplay.clientServiceMenu()){
+					out.println(ins);
+				}
 				String request = in.readLine();
 				System.out.println("Request from " + customer.getKey());
 				String response = bank.processRequest(customer, request);
