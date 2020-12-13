@@ -53,10 +53,11 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(command) {
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+				case "NEWACCOUNT" : return addAccount(customer);
 				case "WITHDRAW" : return withdrawMoney(customer);
 				case "DEPOSIT" : return depositMoney(customer);
-				case "TRANSFERMONEYTOPERSONAL" : return transferMoneyToPersonal(customer);
-				case "TRANSFERMONEYTOEXTERNALACCOUNT" : return transferMoneyToExternal(customer);
+				case "MOVE" : return transferMoneyToPersonal(customer);
+				case "PAY" : return payThirdParty(customer,request);
 			default : return "FAIL";
 			}
 		}
@@ -69,9 +70,8 @@ public class NewBank {
 
 	private String payThirdParty(CustomerID customer, String request){
 		try{
-			String[] parts = request.split(" ");
-			String customerToDeposit = parts[1];
-			double amountToDeposit = Double.parseDouble(parts[2]);
+			String customerToDeposit = request.split(" ")[1];
+			double amountToDeposit = Double.parseDouble(request.split(" ")[2]);
 			// Checks that the customerToDeposit exists in the bank and that the customer has enough money to transfer
 			if(customers.containsKey(customerToDeposit) && customers.get(customer.getKey()).getMainAccount().removeFromAccount(amountToDeposit)){
 				customers.get(customerToDeposit).getMainAccount().addToAccount(amountToDeposit);
@@ -104,10 +104,6 @@ public class NewBank {
 	}
 
 	private String transferMoneyToPersonal(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
-	}
-
-	private String transferMoneyToExternal(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 }
