@@ -52,6 +52,7 @@ public class NewBank {
 
 		if(customers.containsKey(customer.getKey())) {
 			switch(command) {
+				case "ADDACCOUNT" : return addAccount(customer,request);
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				case "NEWACCOUNT" : return addAccount(customer);
 				case "WITHDRAW" : return withdrawMoney(customer);
@@ -84,13 +85,22 @@ public class NewBank {
 		return ("FAIL");
 	}
 
-	private String addAccount(CustomerID customer) {
-		if (showMyAccounts(customer).contains("<Name>")) {
-			return "FAIL";
-		} else {
-			customers.get(customer.getKey()).addAccount(new Account("<Name>", 0.0));
-			return "SUCCESS";
+	private String addAccount(CustomerID customer, String request) {
+		try{
+			String[] parts = request.split(" ");
+			String accountName = parts[1];
+
+			if (showMyAccounts(customer).contains(accountName)) {
+				return "FAIL";
+			} else {
+				customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
+				return "SUCCESS";
+			}
 		}
+		catch (Exception e){
+			return ("FAIL");
+		}
+
 	}
 
 	private String withdrawMoney(CustomerID customer) {
