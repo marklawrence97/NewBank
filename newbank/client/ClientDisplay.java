@@ -1,5 +1,6 @@
 package newbank.client;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import static java.lang.System.out;
@@ -12,6 +13,12 @@ public class ClientDisplay {
         System.out.println("|-----------------------------------|");
         System.out.println("|Welcome to NewBank banking service.|");
         System.out.println("|-----------------------------------|");
+    }
+
+    public static void clientCreatedAnnouncement(String password, PrintWriter out){
+        out.println("Congratulations, your account as been created !");
+        out.println("£10 has been credited on this account as a welcome gift.");
+        out.println("To connect later on, your password is: " + password);
     }
 
     public static List<String> clientServiceMenu(){
@@ -27,6 +34,5 @@ public class ClientDisplay {
         instructionsList.add("6.PAY <Person/Company> <Amount>");
         return instructionsList;
     }
-
 
 }

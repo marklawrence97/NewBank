@@ -26,14 +26,35 @@ public class NewBankClientHandler extends Thread{
 		try {
 			newbank.server.CustomerID customer;
 			while (true){
-				String userName = getUserInput("Enter Username");
-				String password = getUserInput("Enter Password");
-				out.println("Checking Details...");
-				customer = bank.checkLogInDetails(userName, password);
-				if (customer != null){
-					break;
+				String path = getUserInput("Enter 1 to Sign In, 2 to Sign Up");
+				if (path.equals("1")) {
+					String userName = getUserInput("Enter Username");
+					String password = getUserInput("Enter Password");
+					out.println("Checking Details...");
+					customer = bank.checkLogInDetails(userName, password);
+					if (customer != null) {
+						break;
+					}
+					out.println("Log In Failed. Please re-enter your details");
+				} else if(path.equals("2")){
+					String userName = getUserInput("Enter a Username");
+					if (bank.customers.get(userName) == null) {
+						Customer newCustomer = new Customer();
+						newCustomer.addAccount(new Account("Main", 10.0));
+						String password = newCustomer.getPassword();
+						bank.customers.put(userName, newCustomer);
+						bank.account.put(userName, 10.0);
+						customer = bank.checkLogInDetails(userName, password);
+						clientDisplay.clientCreatedAnnouncement(password,out);
+						if (customer != null) {
+							break;
+						}
+					} else {
+						out.println("this userName is already taken, try another one or sign in to your account.");
+					}
+				} else {
+					out.println("Wrong Command, please try again.");
 				}
-				out.println("Log In Failed. Please re-enter your details");
 			}
 			// if the user is authenticated then get requests from the user and process them
 			for (String ins : clientDisplay.clientServiceMenu()){
