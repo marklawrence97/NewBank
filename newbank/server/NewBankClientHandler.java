@@ -45,7 +45,7 @@ public class NewBankClientHandler extends Thread{
 						bank.customers.put(userName, newCustomer);
 						bank.account.put(userName, 10.0);
 						customer = bank.checkLogInDetails(userName, password);
-						clientDisplay.clientCreatedAnnouncement(password);
+						clientDisplay.clientCreatedAnnouncement(password, out);
 						if (customer != null) {
 							break;
 						}
