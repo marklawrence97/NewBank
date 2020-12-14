@@ -58,7 +58,7 @@ public class NewBank {
 				case "NEWACCOUNT" : return addAccount(customer,request);
 				case "WITHDRAW" : return withdrawMoney(customer,request);
 				case "DEPOSIT" : return depositMoney(customer, request);
-				case "MOVE" : return transferMoneyToPersonal(customer);
+				case "MOVE" : return transferMoneyToPersonal(customer, request);
 				case "PAY" : return payThirdParty(customer,request);
 			default : return "FAIL";
 			}
@@ -137,7 +137,14 @@ public class NewBank {
 		}
 	}
 
-	private String transferMoneyToPersonal(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
+	private String transferMoneyToPersonal(CustomerID customer, String request) {
+		String[] inputRequest = request.split(" ");
+		try {
+			withdrawMoney(customer, "WITHDRAW " + inputRequest[1]);
+			depositMoney(customer, "WITHDRAW " + inputRequest[1]);
+			return "SUCCESS";
+		} catch (Exception e) {
+			return "FAIL";
+		}
 	}
 }
