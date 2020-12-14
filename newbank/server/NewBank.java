@@ -27,11 +27,13 @@ public class NewBank {
 		christina.addAccount(new Account("Checking", 350.0));
 		christina.setPassword("christina123");
 		customers.put("Christina", christina);
+		account.put("Christina", 2000.0);
 
 		Customer john = new Customer();
 		john.addAccount(new Account("Checking", 250.0));
 		john.setPassword("john123");
 		customers.put("John", john);
+		account.put("John", 1500.0);
 	}
 
 	public static NewBank getBank() {
@@ -54,8 +56,8 @@ public class NewBank {
 			switch(command) {
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				case "NEWACCOUNT" : return addAccount(customer,request);
-				case "WITHDRAW" : return withdrawMoney(customer);
-				case "DEPOSIT" : return depositMoney(customer);
+				case "WITHDRAW" : return withdrawMoney(customer,request);
+				case "DEPOSIT" : return depositMoney(customer, request);
 				case "MOVE" : return transferMoneyToPersonal(customer);
 				case "PAY" : return payThirdParty(customer,request);
 			default : return "FAIL";
@@ -65,7 +67,8 @@ public class NewBank {
 	}
 
 	private String showMyAccounts(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
+		//return (customers.get(customer.getKey())).accountsToString();
+		return "Current balance: " + String.valueOf(account.get(customer.getKey()));
 	}
 
 	private String payThirdParty(CustomerID customer, String request){
@@ -102,14 +105,36 @@ public class NewBank {
 
 	}
 
-	private String withdrawMoney(CustomerID customer) {
-		double balance = account.get(customer.getKey());
-		String currentBalance = String.valueOf(balance);
-		return "The new balance is:" + currentBalance;
+	private String withdrawMoney(CustomerID customer, String request) {
+		try{
+			String[] inputRequest = request.split(" ");
+			double withdrawalAmount = Double.parseDouble(inputRequest[1]);
+			double customerBalance = account.get(customer.getKey());
+			double newBalance = customerBalance - withdrawalAmount;
+			account.remove(customer.getKey());
+			account.put(customer.getKey(), newBalance);
+			return "The amount withdrawn is: " + String.valueOf(withdrawalAmount) +
+					" new Account balance is: " + String.valueOf(account.get(customer.getKey())) ;
+		}catch(Exception ex){
+			System.out.println("Withdrawal Input wasn't successful " + ex);
+			return "Withdrawal Not successful";
+		}
 	}
 
-	private String depositMoney(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
+	private String depositMoney(CustomerID customer, String request) {
+		try{
+			String[] inputRequest = request.split(" ");
+			double withdrawalAmount = Double.parseDouble(inputRequest[1]);
+			double customerBalance = account.get(customer.getKey());
+			double newBalance = customerBalance + withdrawalAmount;
+			account.remove(customer.getKey());
+			account.put(customer.getKey(), newBalance);
+			return "The amount deposited is: " + String.valueOf(withdrawalAmount) +
+					" new Account balance is: " + String.valueOf(account.get(customer.getKey())) ;
+		}catch(Exception ex){
+			System.out.println("Deposit input wasn't successful " + ex);
+			return "Deposit Not successful";
+		}
 	}
 
 	private String transferMoneyToPersonal(CustomerID customer) {
