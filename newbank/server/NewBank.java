@@ -67,8 +67,7 @@ public class NewBank {
 	}
 
 	private String showMyAccounts(CustomerID customer) {
-		//return (customers.get(customer.getKey())).accountsToString();
-		return "Current balance: " + String.valueOf(account.get(customer.getKey()));
+		return (customers.get(customer.getKey())).accountsToString();
 	}
 
 	private String payThirdParty(CustomerID customer, String request){
@@ -91,7 +90,6 @@ public class NewBank {
 		try{
 			String[] parts = request.split(" ");
 			String accountName = parts[1];
-
 			if (showMyAccounts(customer).contains(accountName)) {
 				return "FAIL";
 			} else {
@@ -102,38 +100,33 @@ public class NewBank {
 		catch (Exception e){
 			return ("FAIL");
 		}
-
 	}
 
 	private String withdrawMoney(CustomerID customer, String request) {
 		try{
 			String[] inputRequest = request.split(" ");
 			double withdrawalAmount = Double.parseDouble(inputRequest[1]);
-			double customerBalance = account.get(customer.getKey());
-			double newBalance = customerBalance - withdrawalAmount;
-			account.remove(customer.getKey());
-			account.put(customer.getKey(), newBalance);
-			return "The amount withdrawn is: " + String.valueOf(withdrawalAmount) +
-					" new Account balance is: " + String.valueOf(account.get(customer.getKey())) ;
+			if (customers.get(customer.getKey()).getMainAccount().removeFromAccount(withdrawalAmount)){
+				System.out.println("The amount withdrawn is: " + String.valueOf(withdrawalAmount));
+				showMyAccounts(customer);
+				return "SUCCESS";
+			}
 		}catch(Exception ex){
 			System.out.println("Withdrawal Input wasn't successful " + ex);
-			return "Withdrawal Not successful";
+			return "FAIL";
 		}
+		return "FAIL";
 	}
 
 	private String depositMoney(CustomerID customer, String request) {
 		try{
 			String[] inputRequest = request.split(" ");
-			double withdrawalAmount = Double.parseDouble(inputRequest[1]);
-			double customerBalance = account.get(customer.getKey());
-			double newBalance = customerBalance + withdrawalAmount;
-			account.remove(customer.getKey());
-			account.put(customer.getKey(), newBalance);
-			return "The amount deposited is: " + String.valueOf(withdrawalAmount) +
-					" new Account balance is: " + String.valueOf(account.get(customer.getKey())) ;
+			double depositAmount = Double.parseDouble(inputRequest[1]);
+			customers.get(customer.getKey()).getMainAccount().addToAccount(depositAmount);
+			return "SUCCESS";
 		}catch(Exception ex){
 			System.out.println("Deposit input wasn't successful " + ex);
-			return "Deposit Not successful";
+			return "FAIL";
 		}
 	}
 
