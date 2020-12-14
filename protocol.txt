@@ -11,6 +11,14 @@ e.g. NEWACCOUNT Savings
 Returns SUCCESS or FAIL
 If account name not unique, returns fail. Else, creates and returns success
 
+WITHDRAW <Amount>
+e.g. WITHDRAW 100
+Returns SUCCESS or FAIL
+
+DEPOSIT <Amount>
+e.g. DEPOSIT 100
+Returns SUCCESS or FAIL
+
 MOVE <Amount> <From> <To>
 e.g. MOVE 100 Main Savings
 Returns SUCCESS or FAIL
